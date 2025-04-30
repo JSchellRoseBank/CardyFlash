@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.assignment2.MainActivity
 import com.example.assignment2.ui.theme.Assignment2Theme
+import org.w3c.dom.Text
 
 class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,18 +26,34 @@ class Questions : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment2Theme {
+                var score = intent.getIntExtra("score", 0)
+                val questions = arrayListOf<String>(
+                    "The Great Wall of China was built to protect against invasions from the Mongols.",
+                    "Christopher Columbus discovered America in 1776.",
+                    "The Roman Empire was ruled by Julius Caesar before it became a republic.",
+                    "World War I ended in 1918.",
+                    "The Declaration of Independence was signed in 1776.")
+                val answers = arrayListOf<Boolean>(true,false,false,true,true)
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 30.dp, top = 80.dp, end = 30.dp)
                 ) {
+
+
+
+                    // TODO: Remove button
                     Button(onClick = {
-                        val next = Intent(this@Questions, MainActivity::class.java);
+                        val next = Intent(this@Questions, MainActivity::class.java)
                         startActivity(next)
                     }) {
                         Text(text = "START")
                     }
+                    Text("$score")
+                    Text("$questions")
+                    Text("$answers")
                 }
             }
         }

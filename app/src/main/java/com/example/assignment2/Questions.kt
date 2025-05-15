@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.assignment2.ui.theme.Assignment2Theme
+import org.w3c.dom.Text
 
 class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +83,7 @@ class Questions : ComponentActivity() {
                         Button(onClick = {
                             questionNumber++
                             answerToQuestion++
+                            answerResponse = ""
                         }) {
                             Text(text = "Next")
                         }
@@ -96,8 +98,17 @@ class Questions : ComponentActivity() {
                     }
                 } else {
                     Row {
-                        Text(text = "Score")
-                        Text(text = "scoreCounter" )
+                        Text(text = "Score: $scoreCounter")
+                        if(scoreCounter >= 3) {
+                            Text(text = "Great job!")
+                        } else {
+                            Text(text = "Keep practicing!")
+                        }
+                        Button(
+                            onClick = {/* TODO: Print questions and numbers */}
+                        ) {
+                            Text(text = "Review")
+                        }
                     }
                 }
             }

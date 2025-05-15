@@ -6,27 +6,28 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.assignment2.MainActivity
 import com.example.assignment2.ui.theme.Assignment2Theme
-import org.w3c.dom.Text
 
-class Questions : ComponentActivity() {
+class Question1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Assignment2Theme {
-                var score = intent.getIntExtra("score", 0)
+                var scoreCounter by remember { mutableIntStateOf(0) }
+                var questionNumber by remember { mutableIntStateOf(0) }
                 val questions = arrayListOf<String>(
                     "The Great Wall of China was built to protect against invasions from the Mongols.",
                     "Christopher Columbus discovered America in 1776.",
@@ -34,6 +35,7 @@ class Questions : ComponentActivity() {
                     "World War I ended in 1918.",
                     "The Declaration of Independence was signed in 1776.")
                 val answers = arrayListOf<Boolean>(true,false,false,true,true)
+                var userAnswer = false
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -41,19 +43,35 @@ class Questions : ComponentActivity() {
                         .fillMaxSize()
                         .padding(start = 30.dp, top = 80.dp, end = 30.dp)
                 ) {
+                    Text(text = questions[questionNumber])
 
+                    Row {
+                        Button(onClick = {
+                                scoreCounter++
+                        }) {
+                            Text(text = "True")
+                        }
 
+                        Button(onClick = {/*TODO: Handle false cases*/}) {
+                            Text(text = "False")
+                        }
+
+                        Text(text = "Score: $scoreCounter")
+                    }
+
+                    Button(onClick = {
+                        /*TODO: Go to next question*/
+                    }) {
+                        Text(text = "Next")
+                    }
 
                     // TODO: Remove button
                     Button(onClick = {
-                        val next = Intent(this@Questions, MainActivity::class.java)
+                        val next = Intent(this@Question1, MainActivity::class.java)
                         startActivity(next)
                     }) {
-                        Text(text = "START")
+                        Text(text = "Back")
                     }
-                    Text("$score")
-                    Text("$questions")
-                    Text("$answers")
                 }
             }
         }

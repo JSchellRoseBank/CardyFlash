@@ -26,8 +26,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment2Theme {
-                var scoreCounter = 10
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -52,8 +50,6 @@ class MainActivity : ComponentActivity() {
 
                     Button(onClick = {
                         val next = Intent(this@MainActivity, Questions::class.java);
-                        next.putExtra("score", scoreCounter)
-
                         startActivity(next)
                     }) {
                         Text(text = "START")

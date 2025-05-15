@@ -40,57 +40,64 @@ class Questions : ComponentActivity() {
                 val answers = arrayListOf<Boolean>(true,false,false,true,true)
                 var userAnswer = false
 
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 30.dp, top = 80.dp, end = 30.dp)
-                ) {
-                    Text(text = questions[questionNumber])
+                if( questionNumber < 5) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(start = 30.dp, top = 80.dp, end = 30.dp)
+                    ) {
+                        Text(text = questions[questionNumber])
 
-                    Row {
-                        Button(onClick = {
-                            userAnswer = true
-                            if (answers[answerToQuestion] == userAnswer) {
-                                scoreCounter++
-                                answerResponse = "Correct!"
-                            } else  {
-                                answerResponse = "Incorrect!"
+                        Row {
+                            Button(onClick = {
+                                userAnswer = true
+                                if (answers[answerToQuestion] == userAnswer) {
+                                    scoreCounter++
+                                    answerResponse = "Correct!"
+                                } else  {
+                                    answerResponse = "Incorrect!"
+                                }
+                            }) {
+                                Text(text = "True")
                             }
+
+                            Button(onClick = {
+                                userAnswer = false
+                                if (answers[answerToQuestion] == userAnswer) {
+                                    scoreCounter++
+                                    answerResponse = "Correct!"
+                                } else  {
+                                    answerResponse = "Incorrect!"
+                                }
+                            }) {
+                                Text(text = "False")
+                            }
+
+                        }
+                        Row {
+                            Text(text = answerResponse)
+                            Text(text = "Score: $scoreCounter")
+                        }
+                        Button(onClick = {
+                            questionNumber++
+                            answerToQuestion++
                         }) {
-                            Text(text = "True")
+                            Text(text = "Next")
                         }
 
+                        // TODO: Remove button
                         Button(onClick = {
-                            userAnswer = false
-                            if (answers[answerToQuestion] == userAnswer) {
-                                scoreCounter++
-                                answerResponse = "Correct!"
-                            } else  {
-                                answerResponse = "Incorrect!"
-                            }
+                            val next = Intent(this@Questions, MainActivity::class.java)
+                            startActivity(next)
                         }) {
-                            Text(text = "False")
+                            Text(text = "Back")
                         }
-
                     }
+                } else {
                     Row {
-                        Text(text = answerResponse)
-                        Text(text = "Score: $scoreCounter")
-                    }
-                    Button(onClick = {
-                        questionNumber++
-                        answerToQuestion++
-                    }) {
-                        Text(text = "Next")
-                    }
-
-                    // TODO: Remove button
-                    Button(onClick = {
-                        val next = Intent(this@Questions, MainActivity::class.java)
-                        startActivity(next)
-                    }) {
-                        Text(text = "Back")
+                        Text(text = "Score")
+                        Text(text = "scoreCounter" )
                     }
                 }
             }

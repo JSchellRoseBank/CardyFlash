@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.assignment2.ui.theme.Assignment2Theme
 
-class Question1 : ComponentActivity() {
+class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,6 +36,7 @@ class Question1 : ComponentActivity() {
                     "The Declaration of Independence was signed in 1776.")
                 val answers = arrayListOf<Boolean>(true,false,false,true,true)
                 var userAnswer = false
+                var answerToQuestion by remember { mutableIntStateOf(0)}
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,7 +48,9 @@ class Question1 : ComponentActivity() {
 
                     Row {
                         Button(onClick = {
+                            if (answers[answerToQuestion] == userAnswer) {
                                 scoreCounter++
+                            }
                         }) {
                             Text(text = "True")
                         }
@@ -61,13 +64,15 @@ class Question1 : ComponentActivity() {
 
                     Button(onClick = {
                         /*TODO: Go to next question*/
+                        questionNumber++
+
                     }) {
                         Text(text = "Next")
                     }
 
                     // TODO: Remove button
                     Button(onClick = {
-                        val next = Intent(this@Question1, MainActivity::class.java)
+                        val next = Intent(this@Questions, MainActivity::class.java)
                         startActivity(next)
                     }) {
                         Text(text = "Back")

@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,8 @@ class Questions : ComponentActivity() {
             Assignment2Theme {
                 var scoreCounter by remember { mutableIntStateOf(0) }
                 var questionNumber by remember { mutableIntStateOf(0) }
+                var answerResponse by remember { mutableStateOf(String()) }
+                var answerToQuestion by remember { mutableIntStateOf(0)}
                 val questions = arrayListOf<String>(
                     "The Great Wall of China was built to protect against invasions from the Mongols.",
                     "Christopher Columbus discovered America in 1776.",
@@ -36,7 +39,6 @@ class Questions : ComponentActivity() {
                     "The Declaration of Independence was signed in 1776.")
                 val answers = arrayListOf<Boolean>(true,false,false,true,true)
                 var userAnswer = false
-                var answerToQuestion by remember { mutableIntStateOf(0)}
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,6 +53,9 @@ class Questions : ComponentActivity() {
                             userAnswer = true
                             if (answers[answerToQuestion] == userAnswer) {
                                 scoreCounter++
+                                answerResponse = "Correct!"
+                            } else  {
+                                answerResponse = "Incorrect!"
                             }
                         }) {
                             Text(text = "True")
@@ -60,16 +65,20 @@ class Questions : ComponentActivity() {
                             userAnswer = false
                             if (answers[answerToQuestion] == userAnswer) {
                                 scoreCounter++
+                                answerResponse = "Correct!"
+                            } else  {
+                                answerResponse = "Incorrect!"
                             }
                         }) {
                             Text(text = "False")
                         }
 
+                    }
+                    Row {
+                        Text(text = answerResponse)
                         Text(text = "Score: $scoreCounter")
                     }
-
                     Button(onClick = {
-                        /*TODO: Go to next question*/
                         questionNumber++
                         answerToQuestion++
                     }) {

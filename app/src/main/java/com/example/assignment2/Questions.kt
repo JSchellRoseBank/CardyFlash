@@ -48,6 +48,7 @@ class Questions : ComponentActivity() {
 
                     Row {
                         Button(onClick = {
+                            userAnswer = true
                             if (answers[answerToQuestion] == userAnswer) {
                                 scoreCounter++
                             }
@@ -55,7 +56,12 @@ class Questions : ComponentActivity() {
                             Text(text = "True")
                         }
 
-                        Button(onClick = {/*TODO: Handle false cases*/}) {
+                        Button(onClick = {
+                            userAnswer = false
+                            if (answers[answerToQuestion] == userAnswer) {
+                                scoreCounter++
+                            }
+                        }) {
                             Text(text = "False")
                         }
 
@@ -65,7 +71,7 @@ class Questions : ComponentActivity() {
                     Button(onClick = {
                         /*TODO: Go to next question*/
                         questionNumber++
-
+                        answerToQuestion++
                     }) {
                         Text(text = "Next")
                     }

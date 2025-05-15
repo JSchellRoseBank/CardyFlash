@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "Our aim is to provide you the opportunity to learn about " +
-                                "certain historical events that happened through history."
+                                "certain historical events that happened throughout history."
                     )
 
                     Button(onClick = {

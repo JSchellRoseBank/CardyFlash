@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -75,66 +76,74 @@ class Questions : ComponentActivity() {
                         )
 
                         Row(
-                            modifier = Modifier.padding(top = 20.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .fillMaxWidth()
                         ) {
-                            Text(
-                                text = answerResponse,
-
-                                )
-                            Text(text = "Score: $scoreCounter")
+                            Column {
+                                Text(text = "Score: $scoreCounter")
+                            }
+                            Spacer(modifier = Modifier.width(200.dp))
+                            Column {
+                                Text(text = answerResponse)
+                            }
                         }
 
                         Row(
                             modifier = Modifier.padding(top = 20.dp)
                         ) {
 
-                            if (hasUserAnswered == false) {
-                                Button(
-                                    modifier = Modifier
-                                        .width(125.dp)
-                                        .height(50.dp),
-                                    onClick = {
-                                        userAnswer = true
-                                        hasUserAnswered = true
+                            Row(
+                                modifier = Modifier.height(75.dp)
+                            ) {
 
-                                        if (hasUserAnswered) {
-                                            if (answers[answerToQuestion] == userAnswer) {
-                                                scoreCounter++
-                                                answerResponse = "Correct!"
-                                            } else {
-                                                answerResponse = "Incorrect!"
+                                if (hasUserAnswered == false) {
+                                    Button(
+                                        modifier = Modifier
+                                            .width(125.dp)
+                                            .height(50.dp),
+                                        onClick = {
+                                            userAnswer = true
+                                            hasUserAnswered = true
+
+                                            if (hasUserAnswered) {
+                                                if (answers[answerToQuestion] == userAnswer) {
+                                                    scoreCounter++
+                                                    answerResponse = "Correct!"
+                                                } else {
+                                                    answerResponse = "Incorrect!"
+                                                }
                                             }
-                                        }
 
-                                    }) {
-                                    Text(text = "True")
-                                }
-
-                                Spacer(modifier = Modifier.width(80.dp))
-
-                                Button(
-                                    modifier = Modifier
-                                        .width(125.dp)
-                                        .height(50.dp),
-                                    onClick = {
-                                        userAnswer = false
-                                        hasUserAnswered = true
-
-                                        if (hasUserAnswered) {
-                                            if (answers[answerToQuestion] == userAnswer) {
-                                                scoreCounter++
-                                                answerResponse = "Correct!"
-                                            } else {
-                                                answerResponse = "Incorrect!"
-                                            }
-                                        }
+                                        }) {
+                                        Text(text = "True")
                                     }
-                                ) {
-                                    Text(text = "False")
+
+                                    Spacer(modifier = Modifier.width(80.dp))
+
+                                    Button(
+                                        modifier = Modifier
+                                            .width(125.dp)
+                                            .height(50.dp),
+                                        onClick = {
+                                            userAnswer = false
+                                            hasUserAnswered = true
+
+                                            if (hasUserAnswered) {
+                                                if (answers[answerToQuestion] == userAnswer) {
+                                                    scoreCounter++
+                                                    answerResponse = "Correct!"
+                                                } else {
+                                                    answerResponse = "Incorrect!"
+                                                }
+                                            }
+                                        }
+                                    ) {
+                                        Text(text = "False")
+                                    }
+                                } else {
+                                    Text(text = "Please proceed to the next question")
                                 }
-                            } else {
-                                Text(text = "Please proceed to the next question")
                             }
 
                         }

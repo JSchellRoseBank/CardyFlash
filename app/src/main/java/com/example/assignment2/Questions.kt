@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ class Questions : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment2Theme {
+                val context = LocalContext.current
                 var scoreCounter by remember { mutableIntStateOf(0) }
                 var questionNumber by remember { mutableIntStateOf(0) }
                 var answerResponse by remember { mutableStateOf(String()) }
@@ -96,6 +98,7 @@ class Questions : ComponentActivity() {
 
                                 if (hasUserAnswered == false) {
                                     Button(
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                                         modifier = Modifier
                                             .width(125.dp)
                                             .height(50.dp),
@@ -119,6 +122,7 @@ class Questions : ComponentActivity() {
                                     Spacer(modifier = Modifier.width(80.dp))
 
                                     Button(
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                                         modifier = Modifier
                                             .width(125.dp)
                                             .height(50.dp),
@@ -146,6 +150,7 @@ class Questions : ComponentActivity() {
                         }
 
                         Button(
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                             modifier = Modifier
                                 .width(125.dp)
                                 .height(50.dp),
@@ -186,6 +191,7 @@ class Questions : ComponentActivity() {
                             )
                         }
                         Button(
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                             modifier = Modifier
                                 .padding(top = 25.dp)
                                 .height(50.dp),
@@ -198,21 +204,9 @@ class Questions : ComponentActivity() {
 
                         Spacer(modifier = Modifier.height(25.dp))
 
-//                        Button(
-//                            modifier = Modifier
-//                                .width(125.dp)
-//                                .height(50.dp),
-//                            onClick = {
-//                                scoreCounter = 0
-//                                exitProcess(0)
-//                        }) {
-//                            Text(
-//                                text = "Exit"
-//                            )
-//                        }
-                        val context = LocalContext.current
 
                         Button(
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                             modifier = Modifier
                                 .width(125.dp)
                                 .height(50.dp),

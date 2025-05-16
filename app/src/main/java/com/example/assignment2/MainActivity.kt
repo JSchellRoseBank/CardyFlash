@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,13 +56,14 @@ class MainActivity : ComponentActivity() {
                     )
 
                     Button(
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                         modifier = Modifier
                             .padding(top = 80.dp).width(200.dp).height(50.dp),
-                            onClick = {
-                            val next = Intent(this@MainActivity, Questions::class.java);
-                            startActivity(next)
+                        onClick = {
+                        val next = Intent(this@MainActivity, Questions::class.java);
+                        startActivity(next)
                     }) {
-                        Text(text = "START")
+                        Text(text = "START", color = Color.Black)
                     }
                 }
             }

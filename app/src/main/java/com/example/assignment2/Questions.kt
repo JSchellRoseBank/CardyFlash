@@ -107,7 +107,7 @@ class Questions : ComponentActivity() {
                                         }
                                     }
                                 ) {
-                                    Text(text = "True")
+                                    Text(text = "True", color = Color.Black)
                                 }
 
                                 Button(
@@ -125,7 +125,7 @@ class Questions : ComponentActivity() {
                                         }
                                     }
                                 ) {
-                                    Text(text = "False")
+                                    Text(text = "False", color = Color.Black)
                                 }
                             }
                         } else {
@@ -145,7 +145,7 @@ class Questions : ComponentActivity() {
                                 hasUserAnswered = false
                             }
                         ) {
-                            Text("Next")
+                            Text(text = "Next", color = Color.Black)
                         }
                     }
                 } else {
@@ -179,7 +179,7 @@ class Questions : ComponentActivity() {
                                 .height(50.dp),
                             onClick = { reviewView = true }
                         ) {
-                            Text(text = "Review Questions And Answers")
+                            Text(text = "Review Questions And Answers", color = Color.Black)
                         }
 
                         Spacer(modifier = Modifier.height(25.dp))
@@ -193,7 +193,7 @@ class Questions : ComponentActivity() {
                                 (context as? Activity)?.finishAffinity()
                             }
                         ) {
-                            Text("Exit")
+                            Text(text = "Exit", color = Color.Black)
                         }
 
                         if (reviewView) {

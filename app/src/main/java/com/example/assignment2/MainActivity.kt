@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -39,8 +40,8 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Text(
                             text = "Welcome",
-                            fontSize = 40.sp,
-                            fontWeight = FontWeight.Medium,
+                            fontSize = 70.sp,
+                            fontWeight = FontWeight.Bold,
                         )
                     }
 
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
 
                     Button(
                         modifier = Modifier
-                            .padding(top = 50.dp).width(200.dp),
+                            .padding(top = 80.dp).width(200.dp).height(50.dp),
                             onClick = {
                             val next = Intent(this@MainActivity, Questions::class.java);
                             startActivity(next)

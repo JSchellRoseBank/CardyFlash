@@ -1,14 +1,12 @@
 package com.example.assignment2
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,9 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.assignment2.MainActivity
+import androidx.compose.ui.unit.sp
 import com.example.assignment2.ui.theme.Assignment2Theme
-import org.w3c.dom.Text
 
 class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +53,7 @@ class Questions : ComponentActivity() {
                 )
                 val answers = listOf<Boolean>(true, false, false, true, true)
 
-                if (questionNumber < 5) {
+                if (questionNumber < 1) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -148,45 +144,71 @@ class Questions : ComponentActivity() {
 
                         }
 
-                        Button(onClick = {
-                            questionNumber++
-                            answerToQuestion++
-                            answerResponse = ""
-                            hasUserAnswered = false
-                        }) {
-                            Text(text = "Next")
-                        }
-
-                        // TODO: Remove button
-                        Button(onClick = {
-                            val next = Intent(this@Questions, MainActivity::class.java)
-                            startActivity(next)
-                        }) {
-                            Text(text = "Back")
+                        Button(
+                            modifier = Modifier
+                                .width(125.dp)
+                                .height(50.dp),
+                            onClick = {
+                                questionNumber++
+                                answerToQuestion++
+                                answerResponse = ""
+                                hasUserAnswered = false
+                            }) {
+                            Text(
+                                text = "Next"
+                            )
                         }
                     }
                 } else {
-                    Column {
-                        Text(text = "Score: $scoreCounter")
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(start = 30.dp, top = 100.dp, end = 30.dp)
+                    ) {
+                        Text(
+                            text = "Score: $scoreCounter", fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
                         if (scoreCounter >= 3) {
-                            Text(text = "Great job!")
+                            Text(
+                                text = "Great job!", fontSize = 30.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         } else {
-                            Text(text = "Keep practicing!")
+                            Text(
+                                text = "Keep practicing!", fontSize = 30.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                         Button(
+                            modifier = Modifier
+                                .padding(top = 25.dp)
+                                .height(50.dp),
                             onClick = {
                                 reviewView = true
                             }
                         ) {
-                            Text(text = "Review")
+                            Text(text = "Review Questions And Answers")
                         }
 
-                        Button(onClick = { /* TODO: Terminate app */
+                        Spacer(modifier = Modifier.height(25.dp))
+
+                        Button(
+                            modifier = Modifier
+                                .width(125.dp)
+                                .height(50.dp),
+                            onClick = { /* TODO: Terminate app */
                             val next = Intent(this@Questions, MainActivity::class.java)
                             startActivity(next)
                             scoreCounter = 0
                         }) {
-                            Text(text = "Exit")
+                            Text(
+                                text = "Exit"
+                            )
                         }
 
                         Row {
@@ -212,9 +234,9 @@ fun ReviewQA(questions: List<String>, answers: List<Boolean>) {
             Text("No questions or answers to display.")
         } else {
             for (i in questions.indices) {
-                Column {
+                Column(modifier = Modifier.padding(top = 15.dp)) {
                     Text(text = "Q: ${questions[i]}", fontWeight = FontWeight.Bold)
-                    Text(text = "A: ${answers[i]}", modifier = Modifier.padding(bottom = 5.dp))
+                    Text(text = "A: ${answers[i]}", modifier = Modifier.padding(bottom = 5.dp), color = Color.Green)
                 }
             }
         }

@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 30.dp, top = 80.dp, end = 30.dp)
+                        .padding(start = 30.dp, top = 100.dp, end = 30.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -45,6 +45,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                     Text(
+                        modifier = Modifier.padding(top = 25.dp),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Light,
                         text = "Our aim is to provide you the opportunity to learn about " +
                                 "certain historical events that happened throughout history."
                     )

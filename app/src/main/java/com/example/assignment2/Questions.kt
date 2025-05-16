@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.assignment2.ui.theme.Assignment2Theme
-import kotlin.system.exitProcess
 
 class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,37 +40,38 @@ class Questions : ComponentActivity() {
         setContent {
             Assignment2Theme {
                 val context = LocalContext.current
+
                 var scoreCounter by remember { mutableIntStateOf(0) }
                 var questionNumber by remember { mutableIntStateOf(0) }
-                var answerResponse by remember { mutableStateOf(String()) }
-                var answerToQuestion by remember { mutableIntStateOf(0) }
-                var reviewView by remember { mutableStateOf(false) }
-                var userAnswer by remember { mutableStateOf(false) }
+                var answerResponse by remember { mutableStateOf("") }
                 var hasUserAnswered by remember { mutableStateOf(false) }
-                val questions = listOf<String>(
+                var reviewView by remember { mutableStateOf(false) }
+
+                val questions = listOf(
                     "The Great Wall of China was built to protect against invasions from the Mongols.",
                     "Christopher Columbus discovered America in 1776.",
                     "The Roman Empire was ruled by Julius Caesar before it became a republic.",
                     "World War I ended in 1918.",
                     "The Declaration of Independence was signed in 1776."
                 )
-                val answers = listOf<Boolean>(true, false, false, true, true)
 
-                if (questionNumber < 5) {
+                val answers = listOf(true, false, false, true, true)
+
+                if (questionNumber < questions.size) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = 30.dp, top = 100.dp, end = 30.dp)
+                            .padding(30.dp, 100.dp, 30.dp, 0.dp)
                     ) {
                         Text(
                             text = questions[questionNumber],
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier
                                 .background(Color.Black)
-                                .padding(start = 20.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
+                                .padding(20.dp)
                                 .height(200.dp)
-                                .fillMaxWidth(1f),
+                                .fillMaxWidth(),
                             color = Color.White
                         )
 
@@ -79,75 +80,59 @@ class Questions : ComponentActivity() {
                                 .padding(top = 20.dp)
                                 .fillMaxWidth()
                         ) {
-                            Column {
-                                Text(text = "Score: $scoreCounter")
-                            }
-                            Spacer(modifier = Modifier.width(200.dp))
-                            Column {
-                                Text(text = answerResponse)
-                            }
+                            Text(text = "Score: $scoreCounter")
+                            Spacer(modifier = Modifier.weight(1f))
+                            Text(text = answerResponse)
                         }
 
-                        Row(
-                            modifier = Modifier.padding(top = 20.dp)
-                        ) {
+                        Spacer(modifier = Modifier.height(20.dp))
 
+                        if (!hasUserAnswered) {
                             Row(
+                                horizontalArrangement = Arrangement.spacedBy(80.dp),
                                 modifier = Modifier.height(75.dp)
                             ) {
-
-                                if (hasUserAnswered == false) {
-                                    Button(
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
-                                        modifier = Modifier
-                                            .width(125.dp)
-                                            .height(50.dp),
-                                        onClick = {
-                                            userAnswer = true
-                                            hasUserAnswered = true
-
-                                            if (hasUserAnswered) {
-                                                if (answers[answerToQuestion] == userAnswer) {
-                                                    scoreCounter++
-                                                    answerResponse = "Correct!"
-                                                } else {
-                                                    answerResponse = "Incorrect!"
-                                                }
-                                            }
-
-                                        }) {
-                                        Text(text = "True")
-                                    }
-
-                                    Spacer(modifier = Modifier.width(80.dp))
-
-                                    Button(
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
-                                        modifier = Modifier
-                                            .width(125.dp)
-                                            .height(50.dp),
-                                        onClick = {
-                                            userAnswer = false
-                                            hasUserAnswered = true
-
-                                            if (hasUserAnswered) {
-                                                if (answers[answerToQuestion] == userAnswer) {
-                                                    scoreCounter++
-                                                    answerResponse = "Correct!"
-                                                } else {
-                                                    answerResponse = "Incorrect!"
-                                                }
-                                            }
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
+                                    modifier = Modifier
+                                        .width(125.dp)
+                                        .height(50.dp),
+                                    onClick = {
+                                        hasUserAnswered = true
+                                        if (answers[questionNumber]) {
+                                            scoreCounter++
+                                            answerResponse = "Correct!"
+                                        } else {
+                                            answerResponse = "Incorrect!"
                                         }
-                                    ) {
-                                        Text(text = "False")
                                     }
-                                } else {
-                                    Text(text = "Please proceed to the next question")
+                                ) {
+                                    Text(text = "True")
+                                }
+
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
+                                    modifier = Modifier
+                                        .width(125.dp)
+                                        .height(50.dp),
+                                    onClick = {
+                                        hasUserAnswered = true
+                                        if (!answers[questionNumber]) {
+                                            scoreCounter++
+                                            answerResponse = "Correct!"
+                                        } else {
+                                            answerResponse = "Incorrect!"
+                                        }
+                                    }
+                                ) {
+                                    Text(text = "False")
                                 }
                             }
-
+                        } else {
+                            Text(text = "Please proceed to the next question")
                         }
+
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Button(
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
@@ -156,54 +141,48 @@ class Questions : ComponentActivity() {
                                 .height(50.dp),
                             onClick = {
                                 questionNumber++
-                                answerToQuestion++
                                 answerResponse = ""
                                 hasUserAnswered = false
-                            }) {
-                            Text(
-                                text = "Next"
-                            )
+                            }
+                        ) {
+                            Text("Next")
                         }
                     }
                 } else {
+                    // End of quiz view
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = 30.dp, top = 100.dp, end = 30.dp)
+                            .padding(30.dp, 100.dp, 30.dp, 0.dp)
                     ) {
                         Text(
-                            text = "Score: $scoreCounter", fontSize = 30.sp,
+                            text = "Score: $scoreCounter",
+                            fontSize = 30.sp,
                             fontWeight = FontWeight.Bold
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        if (scoreCounter >= 3) {
-                            Text(
-                                text = "Great job!", fontSize = 30.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        } else {
-                            Text(
-                                text = "Keep practicing!", fontSize = 30.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+                        Text(
+                            text = if (scoreCounter >= 3) "Great job!" else "Keep practicing!",
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(25.dp))
+
                         Button(
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
                             modifier = Modifier
                                 .padding(top = 25.dp)
                                 .height(50.dp),
-                            onClick = {
-                                reviewView = true
-                            }
+                            onClick = { reviewView = true }
                         ) {
                             Text(text = "Review Questions And Answers")
                         }
 
                         Spacer(modifier = Modifier.height(25.dp))
-
 
                         Button(
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
@@ -211,20 +190,14 @@ class Questions : ComponentActivity() {
                                 .width(125.dp)
                                 .height(50.dp),
                             onClick = {
-                                (context as? Activity)?.finishAffinity() // Finishes all activities
+                                (context as? Activity)?.finishAffinity()
                             }
                         ) {
                             Text("Exit")
                         }
 
-                        Row {
-                            if (reviewView) {
-                                Column {
-                                    ReviewQA(questions, answers)
-                                }
-                            } else {
-                                Text(text = "")
-                            }
+                        if (reviewView) {
+                            ReviewQA(questions, answers)
                         }
                     }
                 }
@@ -236,14 +209,10 @@ class Questions : ComponentActivity() {
 @Composable
 fun ReviewQA(questions: List<String>, answers: List<Boolean>) {
     Column(modifier = Modifier.padding(5.dp)) {
-        if (questions.isEmpty() || answers.isEmpty()) {
-            Text("No questions or answers to display.")
-        } else {
-            for (i in questions.indices) {
-                Column(modifier = Modifier.padding(top = 15.dp)) {
-                    Text(text = "Q: ${questions[i]}", fontWeight = FontWeight.Bold)
-                    Text(text = "A: ${answers[i]}", modifier = Modifier.padding(bottom = 5.dp), color = Color.Green)
-                }
+        questions.zip(answers).forEachIndexed { index, (question, answer) ->
+            Column(modifier = Modifier.padding(top = 15.dp)) {
+                Text(text = "Q: $question", fontWeight = FontWeight.Bold)
+                Text(text = "A: ${if (answer) "True" else "False"}", modifier = Modifier.padding(bottom = 5.dp), color = Color.Green)
             }
         }
     }

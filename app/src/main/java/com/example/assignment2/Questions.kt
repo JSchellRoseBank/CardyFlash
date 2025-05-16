@@ -45,6 +45,8 @@ class Questions : ComponentActivity() {
                 var answerResponse by remember { mutableStateOf(String()) }
                 var answerToQuestion by remember { mutableIntStateOf(0) }
                 var reviewView by remember { mutableStateOf(false) }
+                var userAnswer by remember { mutableStateOf(false) }
+                var hasUserAnswered by remember { mutableStateOf(false) }
                 val questions = listOf<String>(
                     "The Great Wall of China was built to protect against invasions from the Mongols.",
                     "Christopher Columbus discovered America in 1776.",
@@ -53,7 +55,6 @@ class Questions : ComponentActivity() {
                     "The Declaration of Independence was signed in 1776."
                 )
                 val answers = listOf<Boolean>(true, false, false, true, true)
-                var userAnswer = false
 
                 if (questionNumber < 5) {
                     Column(
@@ -73,13 +74,14 @@ class Questions : ComponentActivity() {
                             color = Color.White
                         )
 
-                        Row(modifier = Modifier.padding(top = 20.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                        Row(
+                            modifier = Modifier.padding(top = 20.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
                                 text = answerResponse,
 
-                            )
+                                )
                             Text(text = "Score: $scoreCounter")
                         }
 
@@ -87,40 +89,52 @@ class Questions : ComponentActivity() {
                             modifier = Modifier.padding(top = 20.dp)
                         ) {
 
-                            Button(
-                                modifier = Modifier
-                                    .width(125.dp)
-                                    .height(50.dp),
-                                onClick = {
-                                    userAnswer = true
-                                    if (answers[answerToQuestion] == userAnswer) {
-                                        scoreCounter++
-                                        answerResponse = "Correct!"
-                                    } else {
-                                        answerResponse = "Incorrect!"
-                                    }
-                                }) {
-                                Text(text = "True")
-                            }
+                            if (hasUserAnswered == false) {
+                                Button(
+                                    modifier = Modifier
+                                        .width(125.dp)
+                                        .height(50.dp),
+                                    onClick = {
+                                        userAnswer = true
+                                        hasUserAnswered = true
 
-                            Spacer(modifier = Modifier.width(80.dp))
+                                        if (hasUserAnswered) {
+                                            if (answers[answerToQuestion] == userAnswer) {
+                                                scoreCounter++
+                                                answerResponse = "Correct!"
+                                            } else {
+                                                answerResponse = "Incorrect!"
+                                            }
+                                        }
 
-                            Button(
-                                modifier = Modifier
-                                    .width(125.dp)
-                                    .height(50.dp),
-                                onClick = {
-                                    userAnswer = false
-                                    if (answers[answerToQuestion] == userAnswer) {
-                                        scoreCounter++
-                                        answerResponse = "Correct!"
-                                    } else {
-                                        answerResponse = "Incorrect!"
-                                    }
-
+                                    }) {
+                                    Text(text = "True")
                                 }
-                            ) {
-                                Text(text = "False")
+
+                                Spacer(modifier = Modifier.width(80.dp))
+
+                                Button(
+                                    modifier = Modifier
+                                        .width(125.dp)
+                                        .height(50.dp),
+                                    onClick = {
+                                        userAnswer = false
+                                        hasUserAnswered = true
+
+                                        if (hasUserAnswered) {
+                                            if (answers[answerToQuestion] == userAnswer) {
+                                                scoreCounter++
+                                                answerResponse = "Correct!"
+                                            } else {
+                                                answerResponse = "Incorrect!"
+                                            }
+                                        }
+                                    }
+                                ) {
+                                    Text(text = "False")
+                                }
+                            } else {
+                                Text(text = "Please proceed to the next question")
                             }
 
                         }
@@ -129,6 +143,7 @@ class Questions : ComponentActivity() {
                             questionNumber++
                             answerToQuestion++
                             answerResponse = ""
+                            hasUserAnswered = false
                         }) {
                             Text(text = "Next")
                         }

@@ -1,7 +1,6 @@
 package com.example.assignment2
 
-import android.R
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +25,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.assignment2.ui.theme.Assignment2Theme
+import kotlin.system.exitProcess
 
 class Questions : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class Questions : ComponentActivity() {
                 )
                 val answers = listOf<Boolean>(true, false, false, true, true)
 
-                if (questionNumber < 1) {
+                if (questionNumber < 5) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -197,18 +198,29 @@ class Questions : ComponentActivity() {
 
                         Spacer(modifier = Modifier.height(25.dp))
 
+//                        Button(
+//                            modifier = Modifier
+//                                .width(125.dp)
+//                                .height(50.dp),
+//                            onClick = {
+//                                scoreCounter = 0
+//                                exitProcess(0)
+//                        }) {
+//                            Text(
+//                                text = "Exit"
+//                            )
+//                        }
+                        val context = LocalContext.current
+
                         Button(
                             modifier = Modifier
                                 .width(125.dp)
                                 .height(50.dp),
-                            onClick = { /* TODO: Terminate app */
-                            val next = Intent(this@Questions, MainActivity::class.java)
-                            startActivity(next)
-                            scoreCounter = 0
-                        }) {
-                            Text(
-                                text = "Exit"
-                            )
+                            onClick = {
+                                (context as? Activity)?.finishAffinity() // Finishes all activities
+                            }
+                        ) {
+                            Text("Exit")
                         }
 
                         Row {

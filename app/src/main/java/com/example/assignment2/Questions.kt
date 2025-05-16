@@ -5,10 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +27,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.assignment2.MainActivity
@@ -34,56 +43,88 @@ class Questions : ComponentActivity() {
                 var scoreCounter by remember { mutableIntStateOf(0) }
                 var questionNumber by remember { mutableIntStateOf(0) }
                 var answerResponse by remember { mutableStateOf(String()) }
-                var answerToQuestion by remember { mutableIntStateOf(0)}
+                var answerToQuestion by remember { mutableIntStateOf(0) }
                 var reviewView by remember { mutableStateOf(false) }
                 val questions = listOf<String>(
                     "The Great Wall of China was built to protect against invasions from the Mongols.",
                     "Christopher Columbus discovered America in 1776.",
                     "The Roman Empire was ruled by Julius Caesar before it became a republic.",
                     "World War I ended in 1918.",
-                    "The Declaration of Independence was signed in 1776.")
-                val answers = listOf<Boolean>(true,false,false,true,true)
+                    "The Declaration of Independence was signed in 1776."
+                )
+                val answers = listOf<Boolean>(true, false, false, true, true)
                 var userAnswer = false
 
-                if( questionNumber < 5) {
+                if (questionNumber < 5) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = 30.dp, top = 80.dp, end = 30.dp)
+                            .padding(start = 30.dp, top = 100.dp, end = 30.dp)
                     ) {
-                        Text(text = questions[questionNumber])
+                        Text(
+                            text = questions[questionNumber],
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier
+                                .background(Color.Black)
+                                .padding(start = 20.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
+                                .height(200.dp)
+                                .fillMaxWidth(1f),
+                            color = Color.White
+                        )
 
-                        Row {
-                            Button(onClick = {
-                                userAnswer = true
-                                if (answers[answerToQuestion] == userAnswer) {
-                                    scoreCounter++
-                                    answerResponse = "Correct!"
-                                } else  {
-                                    answerResponse = "Incorrect!"
-                                }
-                            }) {
+                        Row(modifier = Modifier.padding(top = 20.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = answerResponse,
+
+                            )
+                            Text(text = "Score: $scoreCounter")
+                        }
+
+                        Row(
+                            modifier = Modifier.padding(top = 20.dp)
+                        ) {
+
+                            Button(
+                                modifier = Modifier
+                                    .width(125.dp)
+                                    .height(50.dp),
+                                onClick = {
+                                    userAnswer = true
+                                    if (answers[answerToQuestion] == userAnswer) {
+                                        scoreCounter++
+                                        answerResponse = "Correct!"
+                                    } else {
+                                        answerResponse = "Incorrect!"
+                                    }
+                                }) {
                                 Text(text = "True")
                             }
 
-                            Button(onClick = {
-                                userAnswer = false
-                                if (answers[answerToQuestion] == userAnswer) {
-                                    scoreCounter++
-                                    answerResponse = "Correct!"
-                                } else  {
-                                    answerResponse = "Incorrect!"
+                            Spacer(modifier = Modifier.width(80.dp))
+
+                            Button(
+                                modifier = Modifier
+                                    .width(125.dp)
+                                    .height(50.dp),
+                                onClick = {
+                                    userAnswer = false
+                                    if (answers[answerToQuestion] == userAnswer) {
+                                        scoreCounter++
+                                        answerResponse = "Correct!"
+                                    } else {
+                                        answerResponse = "Incorrect!"
+                                    }
+
                                 }
-                            }) {
+                            ) {
                                 Text(text = "False")
                             }
 
                         }
-                        Row {
-                            Text(text = answerResponse)
-                            Text(text = "Score: $scoreCounter")
-                        }
+
                         Button(onClick = {
                             questionNumber++
                             answerToQuestion++
@@ -103,7 +144,7 @@ class Questions : ComponentActivity() {
                 } else {
                     Column {
                         Text(text = "Score: $scoreCounter")
-                        if(scoreCounter >= 3) {
+                        if (scoreCounter >= 3) {
                             Text(text = "Great job!")
                         } else {
                             Text(text = "Keep practicing!")
@@ -116,8 +157,8 @@ class Questions : ComponentActivity() {
                             Text(text = "Review")
                         }
 
-                        Button(onClick = {
-                            val next = Intent(this@Questions, MainActivity::class.java);
+                        Button(onClick = { /* TODO: Terminate app */
+                            val next = Intent(this@Questions, MainActivity::class.java)
                             startActivity(next)
                             scoreCounter = 0
                         }) {
@@ -125,7 +166,7 @@ class Questions : ComponentActivity() {
                         }
 
                         Row {
-                            if(reviewView) {
+                            if (reviewView) {
                                 Column {
                                     ReviewQA(questions, answers)
                                 }
